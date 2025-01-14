@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 11 Leaderboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .leaderboard {
+            width: 90%;
+            max-width: 600px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+        .leaderboard h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .leaderboard ul {
+            list-style: none;
+            padding: 0;
+        }
+        .leaderboard li {
+            font-size: 18px;
+            padding: 10px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+        .leaderboard li:hover {
+            transform: scale(1.02);
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <div class="leaderboard">
+        <h1>Top 11 Weekly Leaderboard</h1>
+        <ul id="leaderboard-list">
+            <!-- Items will be dynamically loaded here -->
+        </ul>
+    </div>
+
+    <script>
+        // Example JSON data (this would be fetched from a remote source in a real application)
+        const leaderboardDataUrl = 'https://example.com/leaderboard-data.json';
+
+        async function fetchLeaderboardData() {
+            try {
+                const response = await fetch(leaderboardDataUrl);
+                if (!response.ok) throw new Error('Failed to fetch leaderboard data.');
+                return await response.json();
+            } catch (error) {
+                console.error(error);
+                return [];
+            }
+        }
+
+        function renderLeaderboard(data) {
+            const listElement = document.getElementById('leaderboard-list');
+            listElement.innerHTML = '';
+
+            data.forEach((item, index) => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${index + 1}. ${item.name} - ${item.score}`;
+                listElement.appendChild(listItem);
+            });
+        }
+
+        // Initialize leaderboard
+        async function initLeaderboard() {
+            const data = await fetchLeaderboardData();
+            renderLeaderboard(data);
+        }
+
+        initLeaderboard();
+    </script>
+</body>
+</html>
