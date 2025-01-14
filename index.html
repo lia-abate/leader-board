@@ -56,6 +56,11 @@
     </div>
 
     <script>
+        const response = await fetch(leaderboardDataUrl);
+console.log(response);
+if (!response.ok) throw new Error('Failed to fetch leaderboard data.');
+const data = await response.json();
+
         // Example JSON data (this would be fetched from a remote source in a real application)
         const leaderboardDataUrl = 'https://example.com/leaderboard-data.json';
 
